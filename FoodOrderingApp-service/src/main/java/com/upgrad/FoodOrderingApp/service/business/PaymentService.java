@@ -15,8 +15,7 @@ import static com.upgrad.FoodOrderingApp.service.common.GenericErrorCode.PNF_002
 @Service
 public class PaymentService {
 
-  @Autowired
-  PaymentDao paymentDao;
+  @Autowired PaymentDao paymentDao;
 
   /**
    * Method returns all available payment methods in the system
@@ -33,7 +32,6 @@ public class PaymentService {
     PaymentEntity paymentEntity = paymentDao.getPaymentByUUID(paymentID);
     if (paymentEntity == null) {
       throw new PaymentMethodNotFoundException(PNF_002.getCode(), PNF_002.getDefaultMessage());
-    } else
-      return paymentEntity;
+    } else return paymentEntity;
   }
 }

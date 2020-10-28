@@ -18,11 +18,9 @@ import static com.upgrad.FoodOrderingApp.service.common.GenericErrorCode.CNF_002
 @Service
 public class CategoryService {
 
-  @Autowired
-  private CategoryDao categoryDao;
+  @Autowired private CategoryDao categoryDao;
 
-  @Autowired
-  private RestaurantDao restaurantDao;
+  @Autowired private RestaurantDao restaurantDao;
 
   /**
    * Method takes no input and returns CategoryEntity List
@@ -70,5 +68,4 @@ public class CategoryService {
     // Retrieve CategoryEntity List from database
     return categoryDao.getCategoriesByRestaurant(restaurantEntity);
   }
-
 }

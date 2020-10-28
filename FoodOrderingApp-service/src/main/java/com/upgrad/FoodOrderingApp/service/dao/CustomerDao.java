@@ -13,8 +13,7 @@ import javax.persistence.PersistenceContext;
 @Repository
 public class CustomerDao {
 
-  @PersistenceContext
-  private EntityManager entityManager;
+  @PersistenceContext private EntityManager entityManager;
 
   /**
    * Method takes a CustomerEntity and stores it in the database
@@ -35,7 +34,8 @@ public class CustomerDao {
    * @param customerAuthEntity CustomerAuthEntity to persist
    * @return persisted CustomerAuthEntity
    */
-  public CustomerAuthEntity saveCustomerAuthentication(final CustomerAuthEntity customerAuthEntity) {
+  public CustomerAuthEntity saveCustomerAuthentication(
+      final CustomerAuthEntity customerAuthEntity) {
     entityManager.persist(customerAuthEntity);
     return customerAuthEntity;
   }
@@ -48,7 +48,8 @@ public class CustomerDao {
    */
   public CustomerEntity getCustomerByContactNumber(final String contactNumber) {
     try {
-      return entityManager.createNamedQuery("Customer.ByContact", CustomerEntity.class)
+      return entityManager
+          .createNamedQuery("Customer.ByContact", CustomerEntity.class)
           .setParameter("contactNumber", contactNumber)
           .getSingleResult();
     } catch (NoResultException nre) {
@@ -64,7 +65,8 @@ public class CustomerDao {
    */
   public CustomerAuthEntity getCustomerAuthenticationByAccessToken(String accessToken) {
     try {
-      return entityManager.createNamedQuery("Customer.ByAuthToken", CustomerAuthEntity.class)
+      return entityManager
+          .createNamedQuery("Customer.ByAuthToken", CustomerAuthEntity.class)
           .setParameter("accessToken", accessToken)
           .getSingleResult();
     } catch (NoResultException nre) {

@@ -21,11 +21,13 @@ import java.util.UUID;
 @RequestMapping("/payment")
 public class PaymentController {
 
-  @Autowired
-  PaymentService paymentService;
+  @Autowired PaymentService paymentService;
 
   @CrossOrigin
-  @RequestMapping(path = "", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+  @RequestMapping(
+      path = "",
+      method = RequestMethod.GET,
+      produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<PaymentListResponse> getPaymentModes() {
 
     // Fetch all payment modes as a list of Payment Entities from the database
@@ -33,7 +35,12 @@ public class PaymentController {
 
     // Map lis tof payment entities to Payment List Response object
     PaymentListResponse response = new PaymentListResponse();
-    paymentEntities.forEach(paymentEntity -> response.addPaymentMethodsItem(new PaymentResponse().id(UUID.fromString(paymentEntity.getUuid())).paymentName(paymentEntity.getPaymentName())));
+    paymentEntities.forEach(
+        paymentEntity ->
+            response.addPaymentMethodsItem(
+                new PaymentResponse()
+                    .id(UUID.fromString(paymentEntity.getUuid()))
+                    .paymentName(paymentEntity.getPaymentName())));
 
     // Return response with right HttpStatus
     if (response.getPaymentMethods().isEmpty()) {

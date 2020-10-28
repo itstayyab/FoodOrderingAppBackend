@@ -12,8 +12,7 @@ import java.util.List;
 @Repository
 public class CategoryDao {
 
-  @PersistenceContext
-  private EntityManager entityManager;
+  @PersistenceContext private EntityManager entityManager;
 
   /**
    * Method returns all categories
@@ -22,7 +21,9 @@ public class CategoryDao {
    */
   public List<CategoryEntity> getAllCategories() {
     try {
-      return entityManager.createNamedQuery("Category.fetchAllCategories", CategoryEntity.class).getResultList();
+      return entityManager
+          .createNamedQuery("Category.fetchAllCategories", CategoryEntity.class)
+          .getResultList();
     } catch (NoResultException nre) {
       return null;
     }
@@ -36,7 +37,8 @@ public class CategoryDao {
    */
   public CategoryEntity getCategoryById(final String categoryId) {
     try {
-      return entityManager.createNamedQuery("Category.fetchCategoryItem", CategoryEntity.class)
+      return entityManager
+          .createNamedQuery("Category.fetchCategoryItem", CategoryEntity.class)
           .setParameter("categoryId", categoryId)
           .getSingleResult();
     } catch (NoResultException nre) {
@@ -52,7 +54,11 @@ public class CategoryDao {
    */
   public List<CategoryEntity> getCategoriesByRestaurant(RestaurantEntity restaurantEntity) {
     try {
-      return entityManager.createNamedQuery("RestaurantCategoryEntity.getCategoryByRestaurant", CategoryEntity.class).setParameter("restaurant", restaurantEntity).getResultList();
+      return entityManager
+          .createNamedQuery(
+              "RestaurantCategoryEntity.getCategoryByRestaurant", CategoryEntity.class)
+          .setParameter("restaurant", restaurantEntity)
+          .getResultList();
     } catch (NoResultException nre) {
       return null;
     }

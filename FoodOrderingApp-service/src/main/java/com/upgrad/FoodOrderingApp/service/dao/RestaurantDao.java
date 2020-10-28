@@ -11,20 +11,25 @@ import java.util.List;
 
 @Repository
 public class RestaurantDao {
-  @PersistenceContext
-  EntityManager entityManager;
+  @PersistenceContext EntityManager entityManager;
 
   public List<RestaurantEntity> restaurantsByRating() {
     return entityManager.createNamedQuery("Restaurants.fetchAll").getResultList();
   }
 
   public List<RestaurantEntity> restaurantsByName(String name) {
-    return entityManager.createNamedQuery("Restaurants.getByName").setParameter("name", "%" + name.toLowerCase() + "%").getResultList();
+    return entityManager
+        .createNamedQuery("Restaurants.getByName")
+        .setParameter("name", "%" + name.toLowerCase() + "%")
+        .getResultList();
   }
 
   public RestaurantEntity getRestaurantByID(String restaurantId) {
     try {
-      return entityManager.createNamedQuery("Restaurants.getById", RestaurantEntity.class).setParameter("id", restaurantId).getSingleResult();
+      return entityManager
+          .createNamedQuery("Restaurants.getById", RestaurantEntity.class)
+          .setParameter("id", restaurantId)
+          .getSingleResult();
     } catch (NoResultException nre) {
       return null;
     }
@@ -32,7 +37,11 @@ public class RestaurantDao {
 
   public List<RestaurantEntity> restaurantByCategory(CategoryEntity categoryEntity) {
     try {
-      return entityManager.createNamedQuery("RestaurantCategoryEntity.getRestaurantByCategory", RestaurantEntity.class).setParameter("category", categoryEntity).getResultList();
+      return entityManager
+          .createNamedQuery(
+              "RestaurantCategoryEntity.getRestaurantByCategory", RestaurantEntity.class)
+          .setParameter("category", categoryEntity)
+          .getResultList();
     } catch (NoResultException nre) {
       return null;
     }

@@ -19,25 +19,24 @@ import java.util.UUID;
 @RestController
 public class ItemController {
 
-  @Autowired
-  private ItemService itemService;
+  @Autowired private ItemService itemService;
 
-  @Autowired
-  private RestaurantService restaurantService;
+  @Autowired private RestaurantService restaurantService;
 
   /**
-   * Method takes restaurant_id from customer, returns top 5 popular items
+   * This method takes restaurant_id from customer, returns top 5 popular items
    *
    * @param restaurantId restaurant id as request path var
    * @return ResponseEntity with list of items
    * @throws RestaurantNotFoundException on invalid restaurantId
    */
   @CrossOrigin
-  @RequestMapping(method = RequestMethod.GET,
+  @RequestMapping(
+      method = RequestMethod.GET,
       path = "/item/restaurant/{restaurant_id}",
       produces = MediaType.APPLICATION_JSON_VALUE)
-  public ResponseEntity<ItemListResponse> getItemsByPopularity(@PathVariable("restaurant_id") final String restaurantId)
-      throws RestaurantNotFoundException {
+  public ResponseEntity<ItemListResponse> getItemsByPopularity(
+      @PathVariable("restaurant_id") final String restaurantId) throws RestaurantNotFoundException {
 
     // Retrieve RestaurantEntity matching restaurantId from database
     RestaurantEntity restaurantEntity = restaurantService.restaurantByUUID(restaurantId);
@@ -51,11 +50,12 @@ public class ItemController {
     int count = 0;
     for (ItemEntity itemEntity : itemList) {
       if (count < 5) {
-        ItemList items = new ItemList()
-            .id(UUID.fromString(itemEntity.getUuid()))
-            .itemName(itemEntity.getItemName())
-            .price(itemEntity.getPrice())
-            .itemType(ItemList.ItemTypeEnum.fromValue(itemEntity.getType().getValue()));
+        ItemList items =
+            new ItemList()
+                .id(UUID.fromString(itemEntity.getUuid()))
+                .itemName(itemEntity.getItemName())
+                .price(itemEntity.getPrice())
+                .itemType(ItemList.ItemTypeEnum.fromValue(itemEntity.getType().getValue()));
         itemListResponse.add(items);
         count = count + 1;
       } else {

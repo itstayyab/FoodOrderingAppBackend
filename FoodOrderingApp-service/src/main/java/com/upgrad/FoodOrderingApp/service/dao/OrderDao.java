@@ -13,8 +13,7 @@ import java.util.List;
 @Repository
 public class OrderDao {
 
-  @PersistenceContext
-  EntityManager entityManager;
+  @PersistenceContext EntityManager entityManager;
 
   /**
    * Method takes a Customer Id as input and list all orders made by the customer
@@ -23,14 +22,16 @@ public class OrderDao {
    * @return List of OrderEntity
    */
   public List<OrderEntity> getOrdersForCustomer(final String customerId) {
-    return entityManager.createNamedQuery("Orders.ByCustomer", OrderEntity.class).setParameter("customerId", customerId).getResultList();
+    return entityManager
+        .createNamedQuery("Orders.ByCustomer", OrderEntity.class)
+        .setParameter("customerId", customerId)
+        .getResultList();
   }
 
   public OrderEntity saveOrder(OrderEntity orderEntity) {
     entityManager.persist(orderEntity);
     return orderEntity;
   }
-
 
   public OrderItemEntity saveOrderItem(OrderItemEntity orderedItem) {
     entityManager.persist(orderedItem);
@@ -39,8 +40,10 @@ public class OrderDao {
 
   public List<OrderEntity> getOrdersByRestaurant(RestaurantEntity restaurant) {
     try {
-      return entityManager.createNamedQuery("fetchOrdersByRestaurant", OrderEntity.class)
-          .setParameter("restaurant", restaurant).getResultList();
+      return entityManager
+          .createNamedQuery("fetchOrdersByRestaurant", OrderEntity.class)
+          .setParameter("restaurant", restaurant)
+          .getResultList();
     } catch (NoResultException nre) {
       System.out.printf("Ashik0 ");
       return null;
