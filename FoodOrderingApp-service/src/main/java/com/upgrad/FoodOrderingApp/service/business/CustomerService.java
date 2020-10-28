@@ -1,7 +1,5 @@
 package com.upgrad.FoodOrderingApp.service.business;
 
-import com.upgrad.FoodOrderingApp.service.businness.JwtTokenProvider;
-import com.upgrad.FoodOrderingApp.service.businness.PasswordCryptographyProvider;
 import com.upgrad.FoodOrderingApp.service.common.AppConstants;
 import com.upgrad.FoodOrderingApp.service.common.UnexpectedException;
 import com.upgrad.FoodOrderingApp.service.dao.CustomerDao;
