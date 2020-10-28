@@ -11,8 +11,7 @@ import java.util.List;
 @Repository
 public class PaymentDao {
 
-  @PersistenceContext
-  EntityManager entityManager;
+  @PersistenceContext EntityManager entityManager;
 
   /**
    * Method returns all available Payment Entities in the system
@@ -25,12 +24,12 @@ public class PaymentDao {
 
   public PaymentEntity getPaymentByUUID(String uuid) {
     try {
-      return entityManager.createNamedQuery("PaymentModes.getById", PaymentEntity.class)
+      return entityManager
+          .createNamedQuery("PaymentModes.getById", PaymentEntity.class)
           .setParameter("uuid", uuid)
           .getSingleResult();
     } catch (NoResultException nre) {
       return null;
     }
   }
-
 }

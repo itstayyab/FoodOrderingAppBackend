@@ -19,11 +19,9 @@ import static com.upgrad.FoodOrderingApp.service.common.GenericErrorCode.CPF_002
 @Service
 public class OrderService {
 
-  @Autowired
-  CouponDao couponDao;
+  @Autowired CouponDao couponDao;
 
-  @Autowired
-  OrderDao orderDao;
+  @Autowired OrderDao orderDao;
 
   /**
    * Method takes a coupon name and returns details of the matching coupon
@@ -33,7 +31,8 @@ public class OrderService {
    * @throws CouponNotFoundException on no input (coupon name) and no such coupon is found
    */
   @Transactional(propagation = Propagation.REQUIRED)
-  public CouponEntity getCouponByCouponName(final String couponName) throws CouponNotFoundException {
+  public CouponEntity getCouponByCouponName(final String couponName)
+      throws CouponNotFoundException {
     // Check is input coupon name is valid
     if ((couponName == null) || (couponName.isEmpty())) {
       // Throw error if coupon name is empty
@@ -55,8 +54,7 @@ public class OrderService {
     CouponEntity couponEntity = couponDao.getCouponByCouponId(uuid);
     if (couponEntity != null) {
       return couponEntity;
-    } else
-      throw new CouponNotFoundException("CPF-002", "No coupon by this id");
+    } else throw new CouponNotFoundException("CPF-002", "No coupon by this id");
   }
 
   @Transactional(propagation = Propagation.REQUIRED)

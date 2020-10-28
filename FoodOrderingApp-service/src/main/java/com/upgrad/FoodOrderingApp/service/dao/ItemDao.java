@@ -9,8 +9,7 @@ import javax.persistence.PersistenceContext;
 
 @Repository
 public class ItemDao {
-  @PersistenceContext
-  EntityManager entityManager;
+  @PersistenceContext EntityManager entityManager;
 
   /**
    * Method takes a item uuid and returns the matching ItemEntity
@@ -20,7 +19,8 @@ public class ItemDao {
    */
   public ItemEntity getItemById(String uuid) {
     try {
-      return entityManager.createNamedQuery("ItemEntity.getItemById", ItemEntity.class)
+      return entityManager
+          .createNamedQuery("ItemEntity.getItemById", ItemEntity.class)
           .setParameter("uuid", uuid)
           .getSingleResult();
     } catch (NoResultException nre) {

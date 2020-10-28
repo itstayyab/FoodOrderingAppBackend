@@ -19,36 +19,36 @@ import static com.upgrad.FoodOrderingApp.service.common.GenericErrorCode.INF_001
 @Service
 public class ItemService {
 
-  @Autowired
-  private ItemDao itemDao;
+  @Autowired private ItemDao itemDao;
 
-  @Autowired
-  private RestaurantDao restaurantDao;
+  @Autowired private RestaurantDao restaurantDao;
 
-  @Autowired
-  private CategoryDao categoryDao;
+  @Autowired private CategoryDao categoryDao;
 
-  @Autowired
-  private OrderDao orderDao;
+  @Autowired private OrderDao orderDao;
 
   /**
-   * Method takes restaurant Uuid, category Uuid  and return ItemEntity List from the database
+   * Method takes restaurant Uuid, category Uuid and return ItemEntity List from the database
    *
    * @param restaurantUuid restaurant uuid to retrieve restaurant
-   * @param categoryUuid   category uuid to retrieve item Entity
+   * @param categoryUuid category uuid to retrieve item Entity
    * @return ItemEntity list of restaurantEntity
    */
-  public List<ItemEntity> getItemsByCategoryAndRestaurant(String restaurantUuid, String categoryUuid) {
-    //get Restaurant
+  public List<ItemEntity> getItemsByCategoryAndRestaurant(
+      String restaurantUuid, String categoryUuid) {
+    // get Restaurant
     RestaurantEntity restaurant = restaurantDao.getRestaurantByID(restaurantUuid);
-    //get items in restaurant
+    // get items in restaurant
     Set<ItemEntity> restaurantItems = restaurant.getItems();
 
-    List<ItemEntity> filteredRestaurantItems = restaurantItems.stream().filter(restaurantItem ->
-        restaurantItem.getCategories().stream()
-            .anyMatch(categoryEntity -> categoryEntity.getUuid().equals(categoryUuid)))
-        .sorted(Comparator.comparing(ItemEntity::getItemName, String.CASE_INSENSITIVE_ORDER))
-        .collect(Collectors.toList());
+    List<ItemEntity> filteredRestaurantItems =
+        restaurantItems.stream()
+            .filter(
+                restaurantItem ->
+                    restaurantItem.getCategories().stream()
+                        .anyMatch(categoryEntity -> categoryEntity.getUuid().equals(categoryUuid)))
+            .sorted(Comparator.comparing(ItemEntity::getItemName, String.CASE_INSENSITIVE_ORDER))
+            .collect(Collectors.toList());
     return filteredRestaurantItems;
   }
 
@@ -78,9 +78,7 @@ public class ItemService {
     // Get All items orders in a particular restaurant
     List<ItemEntity> itemEntityList = new ArrayList<>();
     for (OrderEntity orderEntity : orderDao.getOrdersByRestaurant(restaurantEntity)) {
-      orderEntity.getItems().forEach(items ->
-          itemEntityList.add(items.getItem())
-      );
+      orderEntity.getItems().forEach(items -> itemEntityList.add(items.getItem()));
     }
 
     // Create unsorted map of items orders by count
@@ -95,18 +93,17 @@ public class ItemService {
         new LinkedList<Map.Entry<String, Integer>>(unsortedItemCountMap.entrySet());
 
     // Sort the list
-    unsortedItemCountList.sort(new Comparator<Map.Entry<String, Integer>>() {
-      public int compare(Map.Entry<String, Integer> item1,
-                         Map.Entry<String, Integer> item2) {
-        return (item2.getValue()).compareTo(item1.getValue());
-      }
-    });
+    unsortedItemCountList.sort(
+        new Comparator<Map.Entry<String, Integer>>() {
+          public int compare(Map.Entry<String, Integer> item1, Map.Entry<String, Integer> item2) {
+            return (item2.getValue()).compareTo(item1.getValue());
+          }
+        });
 
     // Retrieve itemEntity from database
     List<ItemEntity> sortedItemEntityList = new ArrayList<>();
-    unsortedItemCountList.forEach(list ->
-        sortedItemEntityList.add(itemDao.getItemById(list.getKey()))
-    );
+    unsortedItemCountList.forEach(
+        list -> sortedItemEntityList.add(itemDao.getItemById(list.getKey())));
 
     return sortedItemEntityList;
   }

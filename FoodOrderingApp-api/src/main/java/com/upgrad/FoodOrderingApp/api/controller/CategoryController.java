@@ -23,8 +23,7 @@ public class CategoryController {
   @Autowired private CategoryService categoryService;
 
   /**
-   * Method takes input from customer, returns all categories
-   *
+   * This method takes input from customer and returns all categories
    * @return ResponseEntity with list of Categories
    */
   @CrossOrigin
@@ -51,7 +50,7 @@ public class CategoryController {
   }
 
   /**
-   * Method takes categoryId from customer, returns category from database
+   * This method takes categoryId from customer and returns category from database
    *
    * @param categoryId category id as request path var
    * @return ResponseEntity with Category details

@@ -30,10 +30,9 @@ public class AddressController {
   @Autowired private AddressService addressService;
 
   /**
-   * Method takes Customer's SaveAddress request, stores customer address in the system
+   * This Method takes Customer's SaveAddress request, stores customer address
    *
-   * @param saveAddressRequest Customer's saveAddress request having details like flat, locality,
-   *     city etc.
+   * @param saveAddressRequest
    * @return ResponseEntity with Address Id
    * @throws SaveAddressException on invalid saveAddress request
    * @throws AddressNotFoundException on invalid state id
@@ -81,9 +80,9 @@ public class AddressController {
   }
 
   /**
-   * Method takes authorization from customer, returns all address mapped to his profile
+   * This method takes authorization from customer, returns all address of profile
    *
-   * @param authorization Customer's access token as request header
+   * @param authorization  access token as request header
    * @return ResponseEntity with list of Addresses
    * @throws AuthorizationFailedException on invalid customer access-token
    * @throws UnexpectedException on any other errors
@@ -131,14 +130,14 @@ public class AddressController {
   }
 
   /**
-   * Method takes address id from customer, delete address mapped to his profile
+   * This Method takes address id from customer, delete address in profile
    *
-   * @param authorization Customer's access token as request header
+   * @param authorization Customer access token in header
    * @param addressId Address id to be deleted
    * @return ResponseEntity with id of address deleted
-   * @throws AddressNotFoundException on invalid address id
-   * @throws AuthorizationFailedException on invalid customer access-token
-   * @throws UnexpectedException on any other errors
+   * @throws AddressNotFoundException if invalid address id
+   * @throws AuthorizationFailedException if invalid customer access-token
+   * @throws UnexpectedException if any other errors
    */
   @CrossOrigin
   @RequestMapping(
@@ -167,7 +166,7 @@ public class AddressController {
         .isEmpty()) { // If address have no history of orders, delete the address from database
       deletedAddress = addressService.deleteAddress(address);
     } else { // If address have history of orders, soft delete (deactivate) the address from
-             // database
+      // database
       address.setActive(0);
       deletedAddress = addressService.deactivateAddress(address);
     }
@@ -179,8 +178,7 @@ public class AddressController {
   }
 
   /**
-   * Method takes no input from customer, returns all states
-   *
+   * This method  returns all states
    * @return ResponseEntity with list of States
    */
   @CrossOrigin
@@ -190,10 +188,10 @@ public class AddressController {
       produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<StatesListResponse> getAllStates() {
 
-    // Retrieve all states from database
+    // Retrieve all states
     List<StateEntity> states = addressService.getAllStates();
 
-    // Map retrieved State Entity to Response Object List
+    // Map retrieved State Entity with Response Object List
     if (!states.isEmpty()) {
       List<StatesList> statesList = new LinkedList<>();
       states.forEach(
