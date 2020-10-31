@@ -44,14 +44,17 @@ public class OrderController {
    * @throws AuthorizationFailedException on incorrect/invalid access token
    * @throws CouponNotFoundException on incorrect/invalid/non-existent coupon name
    */
+
   @CrossOrigin
   @RequestMapping(
       path = "/coupon/{coupon_name}",
       method = RequestMethod.GET,
       produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<CouponDetailsResponse> getCoupon(
-      @RequestHeader("authorization") final String headerParam,
+      @RequestHeader("authorization") final String headerParam, //request access token of signed in user
       @PathVariable("coupon_name") final String couponName)
+      //If there is no restaurant by the restaurant uuid entered by the customer,
+      // throw “RestaurantNotFoundException”
       throws AuthorizationFailedException, CouponNotFoundException {
 
     // Get Bearer Authorization Token
@@ -226,6 +229,7 @@ public class OrderController {
       orderItemEntities.add(orderedItem);
       orderService.saveOrderItem(orderedItem);
     }
+    //save the order in the database and return the uuid of the order generated
     SaveOrderResponse saveOrderResponse = new SaveOrderResponse();
     saveOrderResponse.setStatus("ORDER SUCCESSFULLY PLACED");
     saveOrderResponse.setId(savedOrderEntity.getUuid());
