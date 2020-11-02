@@ -24,7 +24,7 @@ import java.util.UUID;
 
 import static com.upgrad.FoodOrderingApp.service.common.GenericErrorCode.*;
 
-@CrossOrigin
+@CrossOrigin //this annotation helps to share resources across origin
 @RestController
 @RequestMapping("/customer")
 public class CustomerController {
@@ -131,7 +131,7 @@ public class CustomerController {
       path = "/logout",
       produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<LogoutResponse> logoutCustomer(
-      @RequestHeader("authorization") final String headerParam)
+      @RequestHeader("authorization") final String headerParam) //request the access token of the signed-in customer in Request Header
       throws AuthorizationFailedException, UnexpectedException {
     // Get Bearer Authorization Token
     final String accessToken = AppUtils.getBearerAuthToken(headerParam);

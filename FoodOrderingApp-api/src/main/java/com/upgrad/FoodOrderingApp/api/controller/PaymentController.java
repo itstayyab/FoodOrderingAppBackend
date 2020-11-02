@@ -33,7 +33,7 @@ public class PaymentController {
     // Fetch all payment modes as a list of Payment Entities from the database
     List<PaymentEntity> paymentEntities = paymentService.getAllPaymentMethods();
 
-    // Map lis tof payment entities to Payment List Response object
+    // Map list of payment entities to Payment List Response object
     PaymentListResponse response = new PaymentListResponse();
     paymentEntities.forEach(
         paymentEntity ->
